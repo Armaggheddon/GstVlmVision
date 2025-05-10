@@ -37,7 +37,7 @@
 
 Ever wondered what a GStreamer pipeline would say if it could talk? Now it can (almost)! With **GstGeminiVision**, you can inject the power of Google's Gemini Vision API directly into your GStreamer media pipelines. Turn your video streams into insightful descriptions, automate content analysis, or just have some fun making your videos self-aware! 🤖🎬
 
-<video src="./docs/gemini_vision_demo.mp4" width="800" height="213" controls autoplay loop></video>
+https://github.com/user-attachments/assets/91699974-dd6d-4957-9aa8-6e85610f3c85
 
 ---
 
