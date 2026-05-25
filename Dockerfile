@@ -1,10 +1,9 @@
 FROM ubuntu:24.04
 
-
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
-    apt-get install \
+    apt-get install -y \
     libgstreamer1.0-dev \
     libgstreamer-plugins-base1.0-dev \
     libgstreamer-plugins-bad1.0-dev \
@@ -25,17 +24,15 @@ RUN apt update && \
     meson \
     ninja-build \
     libcurl4-openssl-dev \
-    -y
+    libjpeg-dev \
+    -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /builder
 
-# RUN cd gst-gemini-plugin && \
-#     meson setup build --prefix=/usr && \
-#     ninja -C builddir
-
-COPY ./gst-gemini-plugin/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./gst-vlm-plugin/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
-
 CMD ["build"]

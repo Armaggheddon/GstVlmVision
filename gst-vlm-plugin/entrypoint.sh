@@ -66,20 +66,20 @@ ensure_main_plugin_built_and_installed() {
     echo "${YELLOW}Clearing GStreamer plugin cache for root user...${RESET}"
     rm -rf /root/.cache/gstreamer-1.0/*
 
-    echo "${CYAN}Verifying 'geminivision' element availability with gst-inspect-1.0...${RESET}"
-    if GST_DEBUG="GST_PLUGIN_LOADING:4" gst-inspect-1.0 geminivision > gst_inspect_output.log 2>&1; then
-        echo "${GREEN}${BOLD}Plugin element 'geminivision' is available to GStreamer.${RESET}"
+    echo "${CYAN}Verifying 'vlmvision' element availability with gst-inspect-1.0...${RESET}"
+    if GST_DEBUG="GST_PLUGIN_LOADING:4" gst-inspect-1.0 vlmvision > gst_inspect_output.log 2>&1; then
+        echo "${GREEN}${BOLD}Plugin element 'vlmvision' is available to GStreamer.${RESET}"
         rm gst_inspect_output.log
     else
-        echo "${RED}${BOLD}FATAL: Plugin element 'geminivision' NOT FOUND by gst-inspect-1.0 after install.${RESET}"
-        echo "${YELLOW}Output of gst-inspect-1.0 geminivision (with GST_PLUGIN_LOADING:4 debug):${RESET}"
+        echo "${RED}${BOLD}FATAL: Plugin element 'vlmvision' NOT FOUND by gst-inspect-1.0 after install.${RESET}"
+        echo "${YELLOW}Output of gst-inspect-1.0 vlmvision (with GST_PLUGIN_LOADING:4 debug):${RESET}"
         cat gst_inspect_output.log
         exit 1
     fi
     echo "${CYAN}--- Main plugin setup complete ---${RESET}"
 }
 
-echo "${CYAN}${BOLD}=== GStreamer Gemini Vision Builder & Tester ===${RESET}"
+echo "${CYAN}${BOLD}=== GStreamer VLM Vision Builder & Tester ===${RESET}"
 echo "${YELLOW}Executing action: ${BOLD}$ACTION${RESET}"
 if [ "$ACTION" = "test-examples" ] && [ -n "$EXAMPLE_FILE_TO_TEST" ]; then
   echo "${YELLOW}Example to test: ${BOLD}$EXAMPLE_FILE_TO_TEST${RESET}"
@@ -157,10 +157,10 @@ case "$ACTION" in
 
   test-examples)
     # --- Environment Variable Check for test-examples ---
-    if [ -z "$GST_GEMINI_API_KEY" ]; then
-      echo "${RED}${BOLD}Error: GST_GEMINI_API_KEY is not set or is empty.${RESET}"; exit 1;
+    if [ -z "$VLM_API_KEY" ]; then
+      echo "${RED}${BOLD}Error: VLM_API_KEY is not set or is empty.${RESET}"; exit 1;
     else
-      echo "${GREEN}GST_GEMINI_API_KEY is set.${RESET}"
+      echo "${GREEN}VLM_API_KEY is set.${RESET}"
     fi
     if [ -z "$EXAMPLE_FILE_TO_TEST" ]; then
       echo "${RED}${BOLD}Error: No example file specified for 'test-examples'.${RESET}"; exit 1;
@@ -184,9 +184,9 @@ case "$ACTION" in
 
     case "$extension" in
       c)
-        SOURCE_C_FILE="$filename" # e.g., gemini_vision_example.c
+        SOURCE_C_FILE="$filename" # e.g., vlm_vision_example.c
         # Path to the executable within the examples output directory
-        TARGET_EXECUTABLE_PATH="$EXAMPLES_OUTPUT_DIR/$name_only" # e.g., bin/gemini_vision_example
+        TARGET_EXECUTABLE_PATH="$EXAMPLES_OUTPUT_DIR/$name_only" # e.g., bin/vlm_vision_example
 
         if [ ! -f "$SOURCE_C_FILE" ]; then
             echo "${RED}${BOLD}Error: C source file '$SOURCE_C_FILE' not found in '$EXAMPLES_MOUNT_DIR'.${RESET}"
@@ -228,7 +228,7 @@ case "$ACTION" in
   shell)
     echo "${CYAN}Dropping into an interactive shell...${RESET}"
     # ... (shell logic remains the same)
-    if [ -n "$GST_GEMINI_API_KEY" ]; then echo "${YELLOW}GST_GEMINI_API_KEY is set.${RESET}"; else echo "${YELLOW}GST_GEMINI_API_KEY is NOT set.${RESET}"; fi
+    if [ -n "$VLM_API_KEY" ]; then echo "${YELLOW}VLM_API_KEY is set.${RESET}"; else echo "${YELLOW}VLM_API_KEY is NOT set.${RESET}"; fi
     exec /bin/sh
     ;;
   *)
