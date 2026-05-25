@@ -37,7 +37,8 @@ GstVlmVision (formerly GstGeminiVision) is a GStreamer plugin that bridges live 
 
 Supported providers: OpenAI, Google Gemini (via OpenAI compatibility), vLLM, Ollama, and any `/v1/chat/completions`-compatible server.
 
-![Video demo](./docs/vlm_vision_demo.mp4)
+https://github.com/user-attachments/assets/91c23d18-2409-410c-a8c1-2cc841419003
+
 
 ---
 
