@@ -1,0 +1,168 @@
+Factory Details:
+  Rank                     none (0)
+  Long-name                VLM Vision Processor
+  Klass                    Filter/Analyzer/Video
+  Description              Processes video frames with OpenAI-compatible vision-language models
+  Author                   https://github.com/Armaggheddon/GstVlmVision
+
+Plugin Details:
+  Name                     vlmvision
+  Description              Processes video frames with OpenAI-compatible vision-language models
+  Filename                 /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstvlmvision.so
+  Version                  1.0.0
+  License                  MIT
+  Source module            vlmvision
+  Binary package           gstvlmvision
+  Origin URL               https://github.com/Armaggheddon/GstVlmVision
+
+GObject
+ +----GInitiallyUnowned
+       +----GstObject
+             +----GstElement
+                   +----GstBaseTransform
+                         +----GstVlmVision
+
+Pad Templates:
+  SINK template: 'sink'
+    Availability: Always
+    Capabilities:
+      video/x-raw
+                 format: { (string)RGB, (string)BGR, (string)RGBA, (string)BGRA }
+      image/jpeg
+
+  SRC template: 'src'
+    Availability: Always
+    Capabilities:
+      video/x-raw
+                 format: { (string)RGB, (string)BGR, (string)RGBA, (string)BGRA }
+      image/jpeg
+
+Element has no clocking capabilities.
+Element has no URI handling capabilities.
+
+Pads:
+  SINK: 'sink'
+    Pad Template: 'sink'
+  SRC: 'src'
+    Pad Template: 'src'
+
+Element Properties:
+
+  analysis-interval   : Time interval in seconds between consecutive analysis calls
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Double. Range:             0.1 -            3600 Default:               5
+
+  api-key             : API key for the endpoint (can be empty for local servers)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: null
+
+  base-url            : Base URL for the OpenAI-compatible API endpoint
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: "https://api.openai.com"
+
+  error-policy        : How to handle API errors (skip, bus, signal)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Enum "VlmErrorPolicy" Default: 0, "skip"
+                           (0): skip             - Silently skip errors
+                           (1): bus              - Post error as GstBus message
+                           (2): signal           - Emit analysis-error signal
+
+  frames-per-request  : Number of frames to include per request
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Integer. Range: 1 - 10 Default: 1
+
+  max-inflight        : Maximum number of concurrent API requests
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Integer. Range: 1 - 16 Default: 1
+
+  max-output-tokens   : Maximum number of tokens to generate
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Integer. Range: 1 - 2147483647 Default: 800
+
+  model               : Model name (e.g. 'gpt-4o', 'gemini-2.0-flash', 'llava-v1.6-34b')
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: ""
+
+  name                : The name of the object
+                        flags: readable, writable
+                        String. Default: "vlmvision0"
+
+  output-mode         : How to emit results (bitmask: 1=meta, 2=signal, 4=bus, 8=raw-json)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Flags "VlmOutputMode" Default: 0x00000003, "signal+meta"
+                           (0x00000001): meta             - GstMeta attachment
+                           (0x00000002): signal           - GObject signal emission
+                           (0x00000004): bus              - GstBus message posting
+                           (0x00000008): json             - Include raw JSON in output
+
+  parent              : The parent of the object
+                        flags: readable, writable
+                        Object of type "GstObject"
+
+  profile             : API compatibility profile (default: openai)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: "openai"
+
+  qos                 : Handle Quality-of-Service events
+                        flags: readable, writable
+                        Boolean. Default: false
+
+  queue-policy        : What to do when max-inflight is reached
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Enum "VlmQueuePolicy" Default: 0, "drop"
+                           (0): drop             - Drop oldest request when full
+                           (1): block            - Block until a slot opens
+
+  request-mode        : API request mode (chat-completions for now)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Enum "VlmRequestMode" Default: 0, "chat-completions"
+                           (0): chat-completions - Chat Completions
+
+  stop-sequences      : Strings that stop generation when encountered
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Boxed pointer of type "GStrv"
+
+  system-prompt       : System prompt (can be empty)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: null
+
+  temperature         : Controls randomness (0.0 to 2.0)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Double. Range:               0 -               2 Default:               1
+
+  template-body       : Path to a file with a Go-template style body override
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: null
+
+  template-headers    : Path to a file with per-line header templates
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: null
+
+  template-response   : JSON path expression for extracting text from nonstandard responses
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: null
+
+  timeout             : HTTP request timeout in seconds
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Integer. Range: 1 - 600 Default: 30
+
+  top-p               : Cumulative probability cutoff for token selection (0.0 to 1.0)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        Double. Range:               0 -               1 Default:             0.8
+
+  user-prompt         : Text prompt describing what to ask about the image(s)
+                        flags: readable, writable, changeable only in NULL or READY state
+                        String. Default: "Describe what you see in this image."
+
+
+Element Signals:
+
+  "description-received" :  void user_function (GstElement * object,
+                                                const gchar * arg0,
+                                                GstBuffer * arg1,
+                                                gpointer user_data);
+
+  "analysis-error" :  void user_function (GstElement * object,
+                                          const gchar * arg0,
+                                          gint arg1,
+                                          gpointer user_data);
